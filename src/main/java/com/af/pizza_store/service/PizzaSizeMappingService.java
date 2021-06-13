@@ -20,4 +20,6 @@ public interface PizzaSizeMappingService {
 	public List<PizzaSizeMapping> findByPizzaSizeId(int pizzaSizeId);
 
 	public PizzaSizeMapping updatePizzaSizeMapping(int id, PizzaSizeMappingUpdateResource pizzaSizeMappingUpdateResource);
+	
+	public String deletePizzaSizeMapping(int id);
 }

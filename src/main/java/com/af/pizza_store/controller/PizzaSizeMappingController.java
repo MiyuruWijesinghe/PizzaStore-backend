@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -105,5 +106,13 @@ public class PizzaSizeMappingController {
 		PizzaSizeMapping pizzaSizeMapping = pizzaSizeMappingService.updatePizzaSizeMapping(id, pizzaSizeMappingUpdateResource);
 		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource("Successfully Updated.", pizzaSizeMapping.getId().toString());
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Object> deletePizzaSizeMapping(@PathVariable(value = "id", required = true) int id) {
+		String message = pizzaSizeMappingService.deletePizzaSizeMapping(id);
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(message);
+		return new ResponseEntity<>(successDetailsDto, HttpStatus.CREATED);
 	}
 }

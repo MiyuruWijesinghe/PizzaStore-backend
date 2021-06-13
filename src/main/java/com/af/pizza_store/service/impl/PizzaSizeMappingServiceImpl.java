@@ -3,10 +3,13 @@ package com.af.pizza_store.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.af.pizza_store.exception.NoRecordFoundException;
 import com.af.pizza_store.model.PizzaSizeMapping;
 import com.af.pizza_store.repository.PizzaSizeMappingRepository;
 import com.af.pizza_store.resource.PizzaSizeMappingUpdateResource;
@@ -68,6 +71,17 @@ public class PizzaSizeMappingServiceImpl implements PizzaSizeMappingService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public String deletePizzaSizeMapping(int id) {
+		Optional<PizzaSizeMapping> isPresentPizzaSizeMapping = pizzaSizeMappingRepository.findById(id);
+		if (!isPresentPizzaSizeMapping.isPresent()) {
+			throw new NoRecordFoundException(environment.getProperty("common.record-not-found"));
+		}
+		
+		pizzaSizeMappingRepository.deleteById(id);
+		return environment.getProperty("common.deleted");
 	}
 
 }
